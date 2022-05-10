@@ -1,0 +1,2422 @@
+##############################################################################################
+## Company: FSAE Lafayette College                                                               
+## Engineers:Harrison Walker,Irwin Frimpong,Lia Chrysanthopoulos, Mithil Shah, Adam Tunnell                                    
+## Last Updated : 05/11/2021 05:50 PM                         
+## Project Name: SCADA FSAE 2021                                 
+## Module Name: config.yaml                                                 
+## Description: YAML Configuration File for configuration CAN Bus information, CAN Nodes,
+##              Sensors(CAN,I2C,USB,GPIO), and GUI Display / Page Setup                   
+#############################################################################################
+
+
+####################################################################################
+##                    PART 1: CAN BUS CONFIGURATION
+####################################################################################
+
+#setup information for each hardware bus
+bus_info:
+  CAN:
+    bus_type: socketcan   #socketcan for actual bus, vcan for virtual bus
+    channel: can0         #can0 for actual bus, vcan0 for virtual bus
+    bitrate: 125000       #should always be 125000
+
+# CAN node ids and eds files
+can_nodes:
+  motor:
+      id: 1
+      eds_file: '[nodeId=001]eds_eDrive150.eds'
+  pack1:
+      id: 10
+      eds_file: 'Pack.eds'
+  # pack2: 
+  #     id: 5
+  #     eds_file: 'Pack.eds'
+
+####################################################################################
+##                    PART 2: SOFTWARE SYSTEM CONFIGUREATION 
+####################################################################################
+
+
+####################################################################################
+##                    PART 2A: EMULATOR STATUS
+##
+## This field allows you to enable or disable emulated sensors 
+## without having to comment out all their configurations
+####################################################################################
+emulation: True
+
+#####################################################################################
+##                  PART 2B: GUI DISPLAY Configuration
+## 
+##  In this part of the configuration file, users can configure the pages and further
+##  sensors groups to be displayed on each page. 
+##  Max Number of Sensor groups per page 3
+#####################################################################################
+Display:
+  Pages:
+  #MAX NUMBER OF GROUP PER PAGE: 3
+    1:
+      - IMU_Demo
+      - Emulator_Demo
+      - Motor_Controller
+
+    2:
+      - IMU_Calibration_1
+      - IMU_Calibration_2
+      - Batteries
+      
+    3: 
+      - IMU_Config_Reg
+      - IMU_Config_Reg2
+      - IMU_Config_Reg3
+
+#####################################################################################
+##                  PART 2C: GUI Sensor Group DISPLAY Configuration 
+##
+## Section of Configuration file to configure sensor groups titles and corresponding
+## defined sensors below.
+## MAX 15 Sensors Per Group
+#####################################################################################
+  Groups: 
+  ## MAX 15 SENSORS PER GROUP
+    I2C_Sensors:
+      - emulator_tsi_drive_state
+      - rtc_time
+      - imu_temp
+      - imu_calsts
+      - gyro_cal
+      - acc_cal
+      - mag_cal
+      - acc_x
+      - acc_y
+      - acc_z
+    
+    I2C_Additional:
+      - usb_torque
+      - linacc_x
+      - linacc_y
+      - linacc_z
+      - angle_x
+      - angle_y
+      - angle_z
+      - gravity_x
+      - gravity_y
+      - gravity_z
+
+    IMU_Config_Reg: 
+      - page_reg
+      - trigger_reg
+      - power_reg
+      - opr_mode_reg
+      - acc_config_reg
+      - mag_config_reg
+      - gyro_config_reg
+      - acc_xoffset_lsb
+      - acc_xoffset_msb
+      - acc_yoffset_lsb
+
+    IMU_Config_Reg2: 
+      - acc_yoffset_msb
+      - acc_zoffset_lsb
+      - acc_zoffset_msb
+      - mag_xoffset_lsb
+      - mag_xoffset_msb
+      - mag_yoffset_lsb
+      - mag_yoffset_msb
+      - mag_zoffset_lsb
+      - mag_zoffset_msb
+      - gyro_x
+      - gyro_y
+      - gyro_z
+
+    IMU_Config_Reg3:
+      - gyro_xoffset_lsb
+      - gyro_xoffset_msb
+      - gyro_yoffset_lsb
+      - gyro_zoffset_lsb
+      - gyro_zoffset_msb
+      - acc_raduis_lsb
+      - acc_raduis_msb
+      - mag_raduis_lsb
+      - mag_raduis_msb
+      - st_result
+      - mag_x
+      - mag_y
+      - mag_z
+
+    IMU_Demo:
+      - imu_temp
+      - linacc_x
+      - linacc_y
+      - linacc_z
+      - acc_x
+      - acc_y
+      - acc_z
+      - angle_x
+      - angle_y
+      - angle_z
+      - gravity_x
+      - gravity_y
+      - gravity_z
+      - mag_x
+      - mag_y
+      - mag_z
+
+    IMU_Calibration_1:
+      - imu_calsts
+      - gyro_cal
+      - acc_cal
+      - mag_cal
+      - acc_x
+      - acc_y
+      - acc_z
+      - acc_xoffset_lsb
+      - acc_xoffset_msb
+      - acc_yoffset_lsb
+      - acc_yoffset_msb
+      - acc_zoffset_lsb
+      - acc_zoffset_msb
+
+    IMU_Calibration_2:
+      - mag_yoffset_lsb
+      - mag_yoffset_msb
+      - mag_zoffset_lsb
+      - mag_zoffset_msb
+      - gyro_xoffset_lsb
+      - gyro_xoffset_msb
+      - gyro_yoffset_lsb
+      - gyro_zoffset_lsb
+      - gyro_zoffset_msb
+      - acc_raduis_lsb
+      - acc_raduis_msb
+      - mag_raduis_lsb
+      - mag_raduis_msb
+      - st_result
+
+
+    Emulator_Demo:
+      - emulator_bool_drive_signal
+      - emulator_car_mph
+      - emulator_battery_percentage
+      - emulator_battery_temperature
+      - emulator_engine_temperature
+      - emulator_differentiated_values
+      - emulator_sloop
+
+
+    Motor_Controller:
+      - motor_select_application
+      - motor_dc_link_circuit_voltage
+      - motor_throttle_voltage
+      - motor_controller_temp_over_23
+      - motor_controller_temp_fahrenheit
+      - motor_current_torque_actual
+      - motor_current_demand
+      - motor_electric_power
+      - motor_warnings
+      - motor_controller_temp
+      - motor_digital_inputs
+      - motor_velocity_actual_value
+      - motor_velocity_actual_avg
+      - motor_temp
+      - motor_flux_actual_current
+      - motor_status
+      - usb_torque
+
+    Batteries:
+      - pack1_serialnumber
+      - pack1_voltage
+      - pack1_soc
+      - pack1_cell12_voltage
+      - pack1_cell12_soc
+      - pack1_cell12_temp
+    
+    EPAL_Demo:
+      - emulator_bool_drive_signal
+      - emulator_car_mph
+      - emulator_battery_percentage
+      - emulator_battery_temperature
+      - emulator_engine_temperature
+
+
+#####################################################################################
+##                  PART 3: SENSOR DEFAULTS AND IMU CONFIGURATION
+##
+## Section with sensor_defaults and BNO-055 IMU Configuration Registers 
+#####################################################################################
+
+Sensor_defaults:
+  unit: ''
+  precision: 2                      
+  display_variable: number        
+  sample_period: 1                  
+  bit_length: 8                  
+  sample_period: 1
+  description: 'This is the default description of a sensor'
+
+IMU_Config_Constants:
+  CONFIG_MODE: 0x00
+  IMU_MODE: 0x08
+  NDOF_MODE: 0x0C
+  POWER_NORMAL: 0x00
+  ACCEL_4G: 0x01
+  GYRO_2000_DPS: 0x00
+  MAGNETOMETER_20HZ: 0x05
+      
+#####################################################################################
+##                  PART 4: SENSOR CONFIGURATION
+##
+## This portion of the configuration file deals with individual sensor configuration 
+## with their respective drivers (CAN, I2C, GPIO, USB, VIRTUAL)
+#####################################################################################
+
+#SAMPLE SENSOR DEFINITION
+
+  #subsytem_name_data_name:             ### Note: Must be all lowercase!
+  # unit: 'V'                           # Units used for this sensor
+  # inputs:
+    #varName1: sensor1_name
+    #varName2: sensor2_name             ### Note: an actual sensor would only have one cal_function
+  # cal_function: "varName1 * varName2" <-- numerical calibration (display_variable must be boolean or number)
+  # cal function:                       <-- state calibration (display_variable must be state)
+    # 1: OFF
+    # 2: STANDBY
+    # 3: DRIVE-READY
+    # 4: DRIVE
+  # cal_function:                     # Conditional Calibration Function Setup. See User Manual For More Info
+    #'In>1000': '(-1)*(65536-In)*(1/100)'
+    #'True': 'In*(1/100)'
+  # bus_type: I2C                     #I2C,CAN,USB,VIRTUAL
+  # primary_address: 0x01             # Address of Sensor of BUS
+  # secondary_address: [0x68,0x69]    #single hex value for CAN, list for I2C
+  # precision: 2                      #number of decimal places
+  # display_variable: number          #number/state/boolean
+  # description: "description of the data being stored in the sensor"
+  # sample_period: 1                  #in seconds for sample rate of sensor
+  # bit_length: 16                    #used only for I2C bus sensors to determine the type of read/ write method to use
+  # var_name: samplename              #Shortened name of the sensor to be used as name displayed for the sensor on the GUI
+  
+
+# Emulated sensors have 3 additional fields
+#   data_values: [20, 80] #number for CONSTANT, [] range for RAMP or SINE, list of values for CYCLE
+#   this is the range of values this emulator will generate
+#   #note these are RAW DATA values
+
+#   data_pattern: RAMP #options are RAMP, SINE, CONSTANT, CYCLE (for states)
+#   this is the pattern the data will cycle through within the given value range
+
+#   data_period: 60 #in seconds
+#   period for plot shape to repeat
+#
+
+## Tip: Recommended max 15 characters for var_name in order to avoid cutting off data on GUI screen 
+
+Sensors:
+
+#commmented out because its not connected
+#USB sensors
+  usb_torque:
+    unit: 'Nm'
+    inputs:
+      Vin: usb_torque
+    cal_function: '101.7018*Vin + 145.5199'
+    bus_type: USB7204
+    primary_address: 1 #channel num
+    secondary_address: Null
+    #mouse
+    # primary_address: 0x413c #vendor id
+    # secondary_address: 0x301a #product id
+    precision: 2
+    display_variable: number 
+    description: "Torque value read from USB torque sensor"
+    bit_length: 16 #probably don't need this
+    sample_period: 1
+    var_name: usb_torque
+  
+  emulator_tsi_drive_state:
+    unit: ''
+    inputs:
+      num: emulator_tsi_drive_mode
+    cal_function:
+      0: 'OFF'
+      1: 'DRIVE'
+    bus_type: EMULATED
+    precision: 0
+    display_variable: state 
+    description: "drive mode determined by TSI board"
+    sample_period: 0.5
+    var_name:  DriveStateEm
+    data_values: [0, 1]
+    data_pattern: CYCLE
+    data_period: 30
+
+  emulator_differentiated_values:
+    unit: ''
+    inputs:
+      in: emulator_differentiated_values
+    cal_function: in
+    bus_type: EMULATED
+    precision: 0
+    display_variable: number
+    description: "data to be undifferentatied by postprocessor"
+    sample_period: 1
+    var_name:  DiffValues
+    data_values: [0, 5, 10, 5, 0]
+    data_pattern: CYCLE
+    data_period: 25
+    
+
+  emulator_temperature:
+    unit: '°C'
+    inputs:
+      Tin: emulator_temperature
+    cal_function: Tin
+    bus_type: EMULATED
+    precision: 0
+    display_variable: number
+    description: "measured motor temperature"
+    sample_period: 1
+    var_name:  TempEm
+    data_values: [20, 80] #number for CONSTANT, [] range for RAMP or SINE, list of values for CYCLE
+    data_pattern: RAMP #options are RAMP, SINE, CONSTANT, CYCLE (for states)
+    data_period: 20 #period for plot shape to repeat
+
+  emulator_sloop:
+    unit: ''
+    inputs:
+      in: emulator_sloop
+    cal_function:
+      0: OPEN
+      1: CLOSED
+    bus_type: EMULATED
+    precision: 0
+    display_variable: state
+    description: "measured motor temperature"
+    sample_period: 1   
+    var_name:  'SAFETY LOOP'
+    data_values: 1 #number for CONSTANT, [] range for RAMP or SINE, list of values for CYCLE
+    data_pattern: CONSTANT #options are RAMP, SINE, CONSTANT, CYCLE (for states)
+    data_period: 0 #period for plot shape to repeat
+
+  #EMULATORS FOR HAN'S EPAL DEMO <3
+
+  emulator_bool_drive_signal:
+    unit: ''
+    inputs:
+      num: emulator_bool_drive_signal
+    cal_function:
+      0: 'FALSE'
+      1: 'TRUE'
+    bus_type: EMULATED
+    precision: 0
+    display_variable: state
+    description: "drive mode determined by TSI board"
+    sample_period: 0.5
+    var_name:  DriveSignal
+    data_values: [0, 1]
+    data_pattern: CYCLE
+    data_period: 30
+
+  emulator_car_mph:
+    unit: 'mph'
+    inputs:
+      in: emulator_car_mph
+    cal_function: in
+    bus_type: EMULATED
+    precision: 0
+    display_variable: number
+    description: "vehicle speed in MPH"
+    sample_period: 1
+    var_name:  CarMPH
+    data_values: [0, 40] #number for CONSTANT, [] range for RAMP or SINE, list of values for CYCLE
+    data_pattern: SINE #options are RAMP, SINE, CONSTANT, CYCLE (for states)
+    data_period: 20 #period for plot shape to repeat
+
+  emulator_battery_percentage:
+    unit: '%'
+    inputs:
+      in: emulator_battery_percentage
+    cal_function: in
+    bus_type: EMULATED
+    precision: 1
+    display_variable: number
+    description: "charge state of batteries expressed as a percent"
+    sample_period: 1
+    var_name:  BattPercent
+    data_values: [100, 0] #number for CONSTANT, [] range for RAMP or SINE, list of values for CYCLE
+    data_pattern: RAMP #options are RAMP, SINE, CONSTANT, CYCLE (for states)
+    data_period: 120 #period for plot shape to repeat
+  
+  emulator_battery_temperature:
+    unit: '°F'
+    inputs:
+      Tin: emulator_battery_temperature
+    cal_function: Tin
+    bus_type: EMULATED
+    precision: 0
+    display_variable: number
+    description: "measured battery temperature"
+    sample_period: 1
+    var_name:  BattTemp
+    data_values: [70, 100] #number for CONSTANT, [] range for RAMP or SINE, list of values for CYCLE
+    data_pattern: SINE #options are RAMP, SINE, CONSTANT, CYCLE (for states)
+    data_period: 60 #period for plot shape to repeat
+
+  emulator_engine_temperature:
+    unit: '°F'
+    inputs:
+      Tin: emulator_engine_temperature
+    cal_function: Tin
+    bus_type: EMULATED
+    precision: 0
+    display_variable: number
+    description: "measured engine temperature"
+    sample_period: 1
+    var_name:  EngineTemp
+    data_values: [70, 200] #number for CONSTANT, [] range for RAMP or SINE, list of values for CYCLE
+    data_pattern: SINE #options are RAMP, SINE, CONSTANT, CYCLE (for states)
+    data_period: 60 #period for plot shape to repeat
+
+# CAN #
+
+  #THIS ONE DOES NOT WORK. DO NOT UNCOMMENT IT
+  motor_nmt_state:
+    units: ''
+    bus_type: CAN
+    display_variable: string
+    inputs:
+      strIn: motor_nmt_state
+    cal_function: 'strIn'
+    primary_address: Null
+    secondary_address: Null
+    precision: 0
+    description: 'This is the network state of the motor controller'
+    sample_period: 0
+    bit_length: 16
+    var_name: MtrNMTState ## Name displayed on screen 
+
+  motor_select_application:
+    unit: ''
+    inputs:
+      in: motor_select_application
+    cal_function:
+      0: 'NO APP'
+      1: 'APP 1 (Up to 4WD)'
+    bus_type: CAN
+    primary_address: 0x3000
+    secondary_address: Null
+    precision: 0
+    display_variable: state
+    description: "Used to select different applications in eDrive. Need to be in APP 1 to drive."
+    bit_length: 16 #probably don't need this
+    sample_period: 1
+    var_name: MtrApplication
+
+  motor_throttle_voltage:
+    unit: 'mV'
+    inputs:
+      Vin: motor_throttle_voltage
+    cal_function: 'Vin'
+    bus_type: CAN
+    primary_address: 0x2070
+    secondary_address: 0x01
+    precision: 0
+    display_variable: number 
+    description: "voltage measured on AD pin in mV"
+    bit_length: 16 
+    sample_period: 5
+    var_name: MtrThrottleVltg
+
+  
+  motor_status:
+    unit: ''
+    inputs:
+      status-enum: motor_status
+    cal_function:
+      # 0b0000000000000000: 'OFF'
+      # 0b0000000000000001: 'READY TO SWITCH ON'
+      # 0b0000000000000010: 'SWITCHED ON'
+      # 0b0000000000000100: 'OPERATION ENABLED'
+      # 0b0000000000001000: 'FAULT'
+      0: 'OFF'
+      1: 'READY TO SWITCH ON'
+      2: 'SWITCHED ON'
+      4: 'OPERATION ENABLED'
+      8: 'FAULT'
+    bus_type: CAN
+    primary_address: 0x6041
+    secondary_address: Null
+    precision: 0
+    display_variable: state 
+    description: "voltage measured on AD pin in mV"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: MtrStatus
+
+  motor_flux_actual_current:
+    unit: 'mA'
+    inputs:
+      Iin: motor_flux_actual_current
+    cal_function: 'Iin'
+    bus_type: CAN
+    primary_address: 0x201d
+    secondary_address: 0x04
+    precision: 0
+    display_variable: number 
+    description: "positive is field weekening, value is actual field weakening current"
+    bit_length: 16
+    sample_period: 5
+    var_name: MtrFluxCurrent
+  
+  motor_temp:
+    unit: '°C'
+    inputs:
+      Tin: motor_temp 
+    cal_function: 'Tin'
+    bus_type: CAN
+    primary_address: 0x2025
+    secondary_address: Null
+    precision: 0
+    display_variable: number 
+    description: "measured motor temperature"
+    bit_length: 16 #probably don't need this
+    sample_period: 5   
+    var_name:  MtrTemp
+
+  motor_velocity_actual_avg:
+    unit: 'm/s'
+    inputs:
+      in: motor_velocity_actual_avg
+    cal_function: 'in'
+    bus_type: CAN
+    primary_address: 0x2086
+    secondary_address: Null
+    precision: 2
+    display_variable: number 
+    description: "velocity is averaging over 1s"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: MtrVelocityAvg
+
+  motor_velocity_actual_value:
+    unit: 'm/s'
+    inputs:
+      in: motor_velocity_actual_value
+    cal_function: 'in'
+    bus_type: CAN
+    primary_address: 0x606c
+    secondary_address: Null
+    precision: 0
+    display_variable: number 
+    description: "Motor velocity"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: MtrVelocityActual
+    
+  motor_digital_inputs:
+    unit: ''
+    inputs:
+      in: motor_digital_inputs
+    cal_function:
+      1: 'Din1'
+      2: 'Din2'
+      4: 'Din3'
+      8: 'Din4'
+      16: 'Din5'
+      32: 'Din6'
+    bus_type: CAN
+    primary_address: 0x2076
+    secondary_address: Null
+    precision: 0
+    display_variable: state 
+    description: ""
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: MtrDigInput
+    
+  motor_controller_temp:
+    unit: '°C'
+    inputs:
+      in: motor_controller_temp
+    cal_function: 'in'
+    bus_type: CAN
+    primary_address: 0x2026
+    secondary_address: 0x01
+    precision: 0
+    display_variable: number 
+    description: "Temperature of the motor controller"
+    bit_length: 8 #probably don't need this
+    sample_period: 5
+    var_name: mtrCntrlTemp
+
+  motor_dc_link_circuit_voltage:
+    unit: 'V'
+    inputs:
+      in: motor_dc_link_circuit_voltage
+    cal_function: 'in/10'
+    bus_type: CAN
+    primary_address: 0x6079
+    secondary_address: Null
+    precision: 1
+    display_variable: number 
+    description: "Voltage of the motor controller's DC link circuit"
+    bit_length: 1 #probably don't need this
+    sample_period: 5
+    var_name: mtr_dc_voltg
+    
+  motor_warnings:
+    unit: ''
+    inputs:
+      in: motor_warnings
+    cal_function:
+      0: 'None'
+      1: 'Controller Temp'
+      2: 'Motor Temp'
+      4: 'DC link under voltage'
+      8: 'DC link over voltage'
+      16: 'DC over current'
+      32: 'Stall protection active'
+      64: 'Maximum vel exceeded'
+      128: 'Proposed power from BMS'
+    bus_type: CAN
+    primary_address: 0x2027
+    secondary_address: Null
+    precision: 0
+    display_variable: state 
+    description: "Motor Warnings"
+    bit_length: 16 
+    sample_period: 5
+    var_name: mtr_warning
+  
+  motor_electric_power:
+    #this is coming directly from the CAN controller
+    #so it's already calculated?
+    unit: 'W'
+    inputs:
+      in: motor_electric_power
+    cal_function: 'in'
+    bus_type: CAN
+    primary_address: 0x2024
+    secondary_address: Null
+    precision: 2
+    display_variable: number 
+    description: "calculated DC powerconsumption"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: MC_elecPwr
+    
+  motor_current_demand:
+    unit: 'mA'
+    inputs:
+      Iin: motor_current_demand
+    cal_function: 'Iin'
+    bus_type: CAN
+    primary_address: 0x201a
+    secondary_address: Null
+    precision: 0
+    display_variable: number 
+    description: "The desired value of motor current which is inserted into current regulator in units 1/1000 Motor rated current"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: MC_demand
+
+  motor_current_torque_actual:
+    unit: 'A'
+    inputs:
+      Iin: motor_current_torque_actual
+    cal_function: 'Iin'
+    bus_type: CAN
+    primary_address: 0x6078
+    secondary_address: 0x01
+    precision: 0
+    display_variable: number 
+    description: "Current Torque Actual Value"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: MC_torq_real
+
+  motor_controller_temp_fahrenheit:
+    unit: '°F'
+    inputs:
+      in: motor_controller_temp
+    cal_function: '(in*9/5)+32'
+    bus_type: VIRTUAL
+    precision: 0
+    display_variable: number 
+    description: "Temperature of the motor controller in fahrenheit"
+    bit_length: 8 #probably don't need this
+    sample_period: 5
+    var_name: MC_tempF
+  
+
+  motor_controller_temp_over_23:
+    unit: ''
+    inputs:
+      in: motor_controller_temp
+    conditional_cal: True
+    cal_function:
+      'in>=23': 'in-23'
+      'True': 'in'
+    bus_type: VIRTUAL
+    precision: 0
+    display_variable: number 
+    description: "Temperature of the motor controller in fahrenheit"
+    bit_length: 8 #probably don't need this
+    sample_period: 5
+    var_name: MC_temp>23
+
+  pack1_serialnumber:
+    unit: ''
+    inputs:
+      in: pack1_serialnumber
+    cal_function: 'in' #calibration function needed
+    bus_type: CAN
+    primary_address: 0x1018
+    secondary_address: 0x04
+    precision: 0
+    display_variable: number 
+    description: "Serial number of pacman1"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: Pack1Serial
+
+  pack1_voltage:
+    unit: 'V'
+    inputs:
+      in: pack1_voltage
+    cal_function: 'in' #calibration function needed
+    bus_type: CAN
+    primary_address: 0x2005
+    secondary_address: Null
+    precision: 0
+    display_variable: number 
+    description: "Voltage of Pack 1"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: Pack1Volts
+
+  pack1_soc:
+    unit: '%'
+    inputs:
+      in: pack1_soc
+    cal_function: 'in' #calibration function needed
+    bus_type: CAN
+    primary_address: 0x2007
+    secondary_address: Null
+    precision: 0
+    display_variable: number 
+    description: "Percent state of charge for Pack 1"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: Pack1SOC
+
+  pack1_discharge_current:
+    unit: 'A'
+    inputs:
+      in: pack1_discharge_current
+    cal_function: 'in' #calibration function needed
+    bus_type: CAN
+    primary_address: 0x2006
+    secondary_address: Null
+    precision: 0
+    display_variable: number 
+    description: "Current discharging from Pack 1 in Amps"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: Pack1Discharge
+
+  # pack1_cell1_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell1_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x01
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 1 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell1Volts
+  
+  # pack1_cell2_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell2_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x02
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 2 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell2Volts
+  
+  # pack1_cell3_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell1_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x03
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 3 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell3Volts
+  
+  # pack1_cell4_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell4_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x04
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 4 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell4Volts
+
+  # pack1_cell5_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell5_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x05
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 5 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell5Volts
+
+  # pack1_cell6_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell6_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x06
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 6 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell6Volts
+
+  # pack1_cell7_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell7_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x07
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 7 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell7Volts
+
+  # pack1_cell8_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell8_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x08
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 8 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell8Volts
+
+  # pack1_cell9_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell9_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x09
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 9 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell9Volts
+
+  # pack1_cell10_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell10_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x0A
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 10 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell10Volts
+
+  # pack1_cell11_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell11_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x0B
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 11 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell11Volts
+
+  pack1_cell12_voltage:
+    unit: 'V'
+    inputs:
+      in: pack1_cell12_voltage
+    cal_function: 'in' #calibration function needed
+    bus_type: CAN
+    primary_address: 0x3002
+    secondary_address: 0x0C
+    precision: 0
+    display_variable: number 
+    description: "Voltage of Cell 12 of Pack 1"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: P1Cell12Volt
+
+  # pack1_cell13_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell13_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x0D
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 13 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell13Volts
+
+  # pack1_cell14_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell14_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x0E
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 14 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell14Volts
+
+  # pack1_cell15_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell15_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x0F
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 15 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell15Volts
+
+  # pack1_cell16_voltage:
+  #   unit: 'V'
+  #   inputs:
+  #     in: pack1_cell16_voltage
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3002
+  #   secondary_address: 0x10
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "Voltage of Cell 16 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell16Volts
+
+  # pack1_cell1_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell1_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x01
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 1 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell1SOC
+
+  # pack1_cell2_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell2_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x02
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 2 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell2SOC
+
+  # pack1_cell3_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell3_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x03
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 3 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell3SOC
+
+  # pack1_cell4_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell4_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x04
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 4 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell4SOC
+
+  # pack1_cell5_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell5_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x05
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 5 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell5SOC
+
+  # pack1_cell6_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell6_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x06
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 6 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell6SOC
+
+  # pack1_cell7_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell7_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x07
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 7 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell7SOC
+  # pack1_cell8_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell8_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x08
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 8 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell8SOC
+
+  # pack1_cell9_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell9_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x09
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 9 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell9SOC
+
+  # pack1_cell10_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell10_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x0A
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 10 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell10SOC
+
+  # pack1_cell11_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell11_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x0B
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 11 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell11SOC
+
+  pack1_cell12_soc:
+    unit: '%'
+    inputs:
+      in: pack1_cell12_soc
+    cal_function: 'in' #calibration function needed
+    bus_type: CAN
+    primary_address: 0x3008
+    secondary_address: 0x0C
+    precision: 0
+    display_variable: number 
+    description: "State of Charge of Cell 12 of Pack 1"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: P1Cell12SOC
+
+  # pack1_cell13_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell13_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x0D
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 13 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell13SOC
+
+  # pack1_cell14_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell14_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x0E
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 14 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell14SOC
+
+  # pack1_cell15_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell15_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x0F
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 15 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell15SOC
+
+  # pack1_cell16_soc:
+  #   unit: '%'
+  #   inputs:
+  #     in: pack1_cell16_soc
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3008
+  #   secondary_address: 0x10
+  #   precision: 0
+  #   display_variable: number 
+  #   description: "State of Charge of Cell 16 of Pack 1"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell16SOC
+
+  # pack1_cell1_temp:
+  #   unit: 'C'
+  #   inputs:
+  #     in: pack1_cell1_temp
+  #   cal_function: 'in' #calibration function needed
+  #   bus_type: CAN
+  #   primary_address: 0x3003
+  #   secondary_address: 0x01
+  #   precision: 1
+  #   display_variable: number 
+  #   description: "Temperature of Cell 1 of Pack 1 in degrees C"
+  #   bit_length: 16 #probably don't need this
+  #   sample_period: 5
+  #   var_name: P1Cell1Temp
+
+  #NEED TO PUT IN THE REST OF THE CELL TEMPS HERE
+
+  pack1_cell12_temp:
+    unit: 'C'
+    inputs:
+      in: pack1_cell12_soc
+    cal_function: 'in' #calibration function needed
+    bus_type: CAN
+    primary_address: 0x3003
+    secondary_address: 0x0C
+    precision: 1
+    display_variable: number 
+    description: "Temperature of Cell 12 of Pack 1 in degrees C"
+    bit_length: 16 #probably don't need this
+    sample_period: 5
+    var_name: P1Cell12Temp
+
+  
+      
+#GPIO  
+  scada_relay:
+      unit: ''
+      inputs:
+        In: scada_relay
+      cal_function: 'In'
+      bus_type: GPIO
+      primary_address: 4 #RELAY PIN NUMBER
+      secondary_address: [0x07]
+      precision: 0
+      display_variable: int  # type of data displayed on screen 
+      description: "This is Relay with Pi pin # 7 or GPIO4 pin"
+      bit_length: 16
+      sample_period: 1
+      var_name: scada_relay
+
+# I2C 
+  rtc_time: 
+    unit: ' '
+    inputs:
+      In: rtc-time
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x68
+    secondary_address: [0x03,0x04,0x05,0x06,0x08,0x09]
+    precision: 0
+    display_variable: string  # type of data displayed on screen 
+    description: "This is time"
+    bit_length: 8 #probably don't need this
+    sample_period: 1 #sample period in seconds
+    var_name: rtc_time  ## Name displayed on screen 
+
+#I2C IMU REGISTER CONFIG#
+  imu_temp:
+    unit: '°C'
+    inputs:
+      In: imu_temp
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x34]
+    precision: 2
+    display_variable: number
+    description: "IMU Temperature"
+    bit_length: 8 
+    sample_period: 1 #sample period in seconds
+    var_name: imu_temp
+
+  imu_calsts:
+    unit: ''
+    inputs:
+      In: imu_calsts
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x35]
+    precision: 0
+    display_variable: number
+    description: "IMU Calibration Status"
+    bit_length: 8 
+    sample_period: 1 #sample period in seconds
+    var_name: imu_calsts
+
+  gyro_cal:
+    unit: ''
+    inputs:
+      In: imu_calsts
+    cal_function: '(In >> 4) & 0x03'
+    bus_type: VIRTUAL 
+    primary_address: 0x28
+    secondary_address: 
+    precision: 0
+    display_variable: number
+    description: "GYRO Calibration Status " #Needs to be 3 to be fully calibrated 
+    bit_length: 16 #probably don't need this
+    sample_period: 1 #sample period in seconds
+    var_name: gyro_cal
+
+  acc_cal:
+    unit: ''
+    inputs:
+      In: imu_calsts
+    cal_function: '(In >> 2) & 0x03'
+    bus_type: VIRTUAL
+    primary_address: 0x28
+    secondary_address: 
+    precision: 0
+    display_variable: number
+    description: "ACCEL Calibration Status" #Needs to be 3 to be fully calibrated 
+    bit_length: 8
+    sample_period: 1 #sample period in seconds
+    var_name: acc_cal
+  
+  mag_cal:
+    unit: ''
+    inputs:
+      In: imu_calsts
+    cal_function: 'In & 0x03'
+    bus_type: VIRTUAL
+    primary_address: 0x28
+    secondary_address: 
+    precision: 0
+    display_variable: number
+    description: "Magntometer Calibration Status" #Needs to be 3 to be fully calibrated
+    bit_length: 8 
+    sample_period: 1 #sample period in seconds
+    var_name: mag_cal
+
+  acc_x:
+    unit: 'm/s^2'
+    inputs:
+      In: acc_x
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x08,0x09]
+    precision: 2
+    display_variable: number
+    description: "IMU Acclerometer X Vector"
+    bit_length: 8 
+    sample_period: 1 #sample period in seconds
+    var_name: acc_x
+
+  acc_y:
+    unit: 'm/s^2'
+    inputs:
+      In: acc_y
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x0A,0x0B]
+    precision: 2
+    display_variable: number
+    description: "IMU Acclerometer Y Vector"
+    bit_length: 8 
+    sample_period: 1 #sample period in seconds
+    var_name: acc_y
+
+  acc_z:
+    unit: 'm/s^2'
+    inputs:
+      In: acc_z
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x0C,0x0D]
+    precision: 2
+    display_variable: number
+    description: "IMU Acclerometer Z Vector"
+    bit_length: 8 
+    sample_period: 1 #sample period in seconds
+    var_name: acc_z
+
+  linacc_x:
+    unit: 'm/s^2'
+    inputs:
+      In: linacc_x
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x28,0x29]
+    precision: 2
+    display_variable: number
+    description: "IMU Linear Acceleration X Component"
+    bit_length: 8
+    sample_period: 1 #sample period in seconds
+    var_name: linacc_x
+
+  linacc_y:
+    unit: 'm/s^2'
+    inputs: 
+      In: linacc_y 
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x2A,0x2B]
+    precision: 2
+    display_variable: number
+    description: "IMU Linear Acceleration Y Component"
+    bit_length: 8
+    sample_period: 1 #sample period in seconds  
+    var_name: linacc_y
+
+  linacc_z:
+    unit: 'm/s^2'
+    inputs:
+      In: linacc_z
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x2C,0x2D]
+    precision: 2
+    display_variable: number
+    description: "IMU Linear Acceleration Z Component"
+    bit_length: 8
+    sample_period: 1 #sample period in seconds
+    var_name: linacc_z
+
+  angle_x:
+    unit: '°'
+    inputs:
+      In: angle_x
+    cal_function: 
+      'In>5760': '(65536-In)*(1/16)'
+      'True': 'In*(1/16)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x1A,0x1B]
+    precision: 2
+    display_variable: number
+    description: "IMU Euler Angle X Component"
+    bit_length: 8
+    sample_period: 1 #sample period in seconds
+    var_name: angle_x
+
+  angle_y:
+    unit: '°'
+    inputs:
+      In: angle_y
+    cal_function:
+      'In>5760': '(65536-In)*(1/16)'
+      'True': 'In*(1/16)'       
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x1C,0x1D]
+    precision: 2
+    display_variable: number
+    description: "IMU Euler Angle Y Component"
+    bit_length: 8
+    sample_period: 1 #sample period in seconds  
+    var_name: angle_y
+
+  angle_z:
+    unit: '°'
+    inputs:
+      In: angle_z
+    cal_function: 
+      'In>5760': '(65536-In)*(1/16)'
+      'True': 'In*(1/16)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x1E,0x1F]
+    precision: 2
+    display_variable: number
+    description: "IMU Euler Angle Z Component"
+    bit_length: 8
+    sample_period: 1 #sample period in seconds
+    var_name: angle_z
+
+  gravity_x:
+    unit: 'm/s^2'
+    inputs:
+      In: gravity_x
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x2E,0x2F]
+    precision: 2
+    display_variable: number
+    description: "IMU Gravity X Component"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: grravity_x
+
+  gravity_y:
+    unit: 'm/s^2'
+    inputs:
+      In: gravity_y
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x30,0x31]
+    precision: 2
+    display_variable: number
+    description: "IMU Gravity Y Component"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds  
+    var_name: gravity_y
+
+  gravity_z:
+    unit: 'm/s^2'
+    inputs:
+      In: gravity_z
+    cal_function:
+      'In>1000': '(-1)*(65536-In)*(1/100)'
+      'True': 'In*(1/100)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x32,0x33]
+    precision: 2
+    display_variable: number
+    description: "IMU Gravity Z Component"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: gravity_z
+
+  mag_x:
+    unit: ''
+    inputs:
+      In: mag_x
+    cal_function: 'In*(1/16)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x0E,0x0F]
+    precision: 2
+    display_variable: number
+    description: "IMU Mag X Component"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: mag_x
+
+  mag_y:
+    unit: ''
+    inputs:
+      In: mag_y
+    cal_function: 'In*(1/16)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x10,0x11]
+    precision: 2
+    display_variable: number
+    description: "IMU Mag Y Component"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds  
+    var_name: mag_y
+
+  mag_z:
+    unit: ''
+    inputs:
+      In: mag_z
+    cal_function: 'In*(1/16)'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x12,0x13]
+    precision: 2
+    display_variable: number
+    description: "IMU Mag Z Component"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: mag_z
+
+#IMU Confiuratoin Registers 
+
+  page_reg:
+    unit: ''
+    inputs:
+      In: page_reg
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x07
+    precision: 0
+    display_variable: number
+    description: "Page Register of IMU"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: page_reg
+
+  trigger_reg:
+    unit: ''
+    inputs:
+      In: trigger_reg
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x3F
+    precision: 0
+    display_variable: number
+    description: "Trigger Register of IMU"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: trigger_reg
+
+  power_reg:
+    unit: ''
+    inputs:
+      In: power_reg
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x3E
+    precision: 0
+    display_variable: number
+    description: "Page Register of IMU"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: power_reg
+
+  opr_mode_reg:
+    unit: ''
+    inputs:
+      In: opr_mode_reg
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x3D
+    precision: 0
+    display_variable: number
+    description: "Operation Range of IMU"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: opr_reg
+    
+  acc_config_reg:
+    unit: ''
+    inputs:
+      In: acc_config_reg
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x08
+    precision: 0
+    display_variable: number
+    description: "Acceleration Config Reg of IMU"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: acc_reg
+
+  mag_config_reg:
+    unit: ''
+    inputs:
+      In: mag_config_reg
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x09
+    precision: 0
+    display_variable: number
+    description: "Magnotometer Configuration of IMU"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: mag_reg
+
+  gyro_config_reg:
+    unit: ''
+    inputs:
+      In: gyro_config_reg
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x0A
+    precision: 0
+    display_variable: number
+    description: "Gyro Configuration Reg of IMU"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: gyro_reg
+
+  acc_xoffset_lsb:
+    unit: ''
+    inputs:
+      In: acc_xoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x55
+    precision: 3
+    display_variable: number
+    description: "ACC x offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: acc_xos_lsb
+
+  acc_xoffset_msb:
+    unit: ''
+    inputs:
+      In: acc_xoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x56
+    precision: 3
+    display_variable: number
+    description: "ACC x offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: acc_xos_msb
+
+  acc_yoffset_lsb:
+    unit: ''
+    inputs:
+      In: acc_yoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x57
+    precision: 3
+    display_variable: number
+    description: "ACC y offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: acc_yos_lsb
+
+  acc_yoffset_msb:
+    unit: ''
+    inputs:
+      In: acc_yoffset_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x58
+    precision: 3
+    display_variable: number
+    description: "ACC y offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: acc_yos_msb
+
+  acc_zoffset_lsb:
+    unit: ''
+    inputs:
+      In: acc_zoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x59
+    precision: 3
+    display_variable: number
+    description: "ACC z offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: acc_zos_lsb
+
+  acc_zoffset_msb:
+    unit: ''
+    inputs:
+      In: acc_zoffset_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x5A
+    precision: 3
+    display_variable: number
+    description: "ACC z offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: acc_zos_msb
+
+  mag_xoffset_lsb:
+    unit: ''
+    inputs:
+      In: mag_xoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x5B
+    precision: 3
+    display_variable: number
+    description: "MAG x offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: mag_xos_lsb
+
+  mag_xoffset_msb:
+    unit: ''
+    inputs:
+      In: mag_xoffset_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x5C
+    precision: 3
+    display_variable: number
+    description: "MAG x offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: mag_xos_msb
+
+  mag_yoffset_lsb:
+    unit: ''
+    inputs:
+      In: mag_yoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x5D
+    precision: 3
+    display_variable: number
+    description: "MAG y offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: mag_yos_lsb
+
+  mag_yoffset_msb:
+    unit: ''
+    inputs:
+      In: mag_yoffset_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x5E
+    precision: 3
+    display_variable: number
+    description: "Mag y offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: mag_yos_msb
+
+  mag_zoffset_lsb:
+    unit: ''
+    inputs:
+      In: mag_zoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x5F
+    precision: 3
+    display_variable: number
+    description: "MAG z offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: mag_zos_lsb
+
+  mag_zoffset_msb:
+    unit: ''
+    inputs:
+      In: mag_zoffset_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x60
+    precision: 3
+    display_variable: number
+    description: "Mag z offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: mag_zos_msb
+
+  gyro_xoffset_lsb:
+    unit: ''
+    inputs:
+      In: gyro_xoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x61
+    precision: 3
+    display_variable: number
+    description: "Gyro x offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: gyro_xos_lsb
+
+  gyro_xoffset_msb:
+    unit: ''
+    inputs:
+      In: gyro_xoffset_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x62
+    precision: 3
+    display_variable: number
+    description: "Gyro x offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: gyro_xos_msb
+
+  gyro_yoffset_lsb:
+    unit: ''
+    inputs:
+      In: gyro_yoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x63
+    precision: 3
+    display_variable: number
+    description: "Gyro y offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: gryo_yos_lsb
+
+  gyro_yoffset_msb:
+    unit: ''
+    inputs:
+      In: gyro_yoffset_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x64
+    precision: 3
+    display_variable: number
+    description: "Gyro y offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: gryo_yos_msb
+
+  gyro_zoffset_lsb:
+    unit: ''
+    inputs:
+      In: gyro_zoffset_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x65
+    precision: 3
+    display_variable: number
+    description: "Gyro z offset lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: gyro_zos_lsb
+
+  gyro_zoffset_msb:
+    unit: ''
+    inputs:
+      In: gyro_zoffset_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: 0x66
+    precision: 3
+    display_variable: number
+    description: "Mag z offset msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: gyro_zos_msb
+
+  acc_raduis_lsb:
+    unit: ''
+    inputs:
+      In: acc_raduis_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x67]
+    precision: 3
+    display_variable: number
+    description: "Acc raduis lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: accRadLsb
+
+  acc_raduis_msb:
+    unit: ''
+    inputs:
+      In: acc_raduis_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x68]
+    precision: 3
+    display_variable: number
+    description: "Acc Raduis msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: accRadMsb
+
+  mag_raduis_lsb:
+    unit: ''
+    inputs:
+      In: mag_raduis_lsb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x69]
+    precision: 3
+    display_variable: number
+    description: "MAG raduis lsb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds 
+    var_name: magRadLsb
+
+  mag_raduis_msb:
+    unit: ''
+    inputs:
+      In: mag_raduis_msb
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x6A]
+    precision: 3
+    display_variable: number
+    description: "Acc Raduis msb for calibration"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: MagRadMsb
+
+  st_result:
+    unit: ''
+    inputs:
+      In: st_result
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x36]
+    precision: 3
+    display_variable: number
+    description: "Power on self test reuslts"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: stReslt
+
+  gyro_x:
+    unit: ''
+    inputs:
+      In: gyro_x
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x14,0x15]
+    precision: 3
+    display_variable: number
+    description: "Gyro X Component"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: gyro_x
+
+  gyro_y:
+    unit: ''
+    inputs:
+      In: gyro_y
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x16,0x17]
+    precision: 3
+    display_variable: number
+    description: "Gyro Y Compoenent"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: gyro_y
+
+  gyro_z:
+    unit: ''
+    inputs:
+      In: gyro_z
+    cal_function: 'In'
+    bus_type: I2C
+    primary_address: 0x28
+    secondary_address: [0x18,0x19]
+    precision: 3
+    display_variable: number
+    description: "Gyro Z Component"
+    bit_length: 8
+    sample_period: 0.2 #sample period in seconds
+    var_name: gyro_z
+
+
+
+    #ACTUAL SENSORS LISTEDED HERE WITH BASIC FORMAT
+    
+        #IMU CODE SENSOR FINAL TEMPLATE BUT STILL NOT TETED WITH NEW IMU
+  # imu-temp: 
+  #   unit: 'C'
+  #   inputs:
+  #     tempIn: imu-temp
+  #   cal_function: 'tempIn'
+  #   bus_type: I2C
+  #   primary_address: 0x29
+  #   secondary_address: [0x34]
+  #   precision: 2
+  #   display_variable: number 
+  #   description: "This is the temperature from the IMU"
+  #   bit_length: 8 
+  #   sample_rate: 1 #sample rate in Sec
+
+  # imu-Accel-Data-X: #ALSO UNDERSCORE RIGHT FOR TITLES like imu_Accel_Data_X
+  #   unit: 'm/s^2'
+  #   inputs:
+  #     AccelDataXLSB: imu-Accel-Data-X-LSB-raw ###IS THIS WAS ITS GONNA BE CALLED IN REDIS
+  #     AccelDataXMSB: imu-Accel-Data-X-MSB-raw
+  #   cal_function: 'AccelDataXLSB + (AccelDataXMSB << 8)' ###DOES THE SHIFTING WORK WITH EVALUATE W/ MSB AND LSB
+  #   bus_type: I2C
+  #   primary_address: 0x29
+  #   secondary_address: [0x08, 0x09] ###MAKE SURE ORDER THE SAME AS INPUTS
+  #   precision: 2
+  #   display_variable: number 
+  #   description: "This is the Acceleration of X Axis from the IMU"
+  #   bit_length: 8 
+  #   sample_rate: 1 #sample rate in Hz
+
+  # imu-Accel-Data-Y:
+  #   unit: 'm/s^2'
+  #   inputs:
+  #     AccelDataYLSB: imu-Accel-Data-Y-LSB-raw
+  #     AccelDataYMSB: imu-Accel-Data-Y-MSB-raw
+  #   cal_function: 'AccelDataYLSB + (AccelDataYMSB << 8)'
+  #   bus_type: I2C
+  #   primary_address: 0x29
+  #   secondary_address: [0x0A, 0x0B]
+  #   precision: 2
+  #   display_variable: number 
+  #   description: "This is the Acceleration of Y Axis from the IMU"
+  #   bit_length: 8 
+  #   sample_rate: 1 #sample rate in Hz
+
+  # imu-Accel-Data-Z:
+  #   unit: 'm/s^2'
+  #   inputs:
+  #     AccelDataZLSB: imu-Accel-Data-Z-LSB-raw
+  #     AccelDataZMSB: imu-Accel-Data-Z-MSB-raw
+  #   cal_function: 'AccelDataZLSB + (AccelDataZMSB << 8)'
+  #   bus_type: I2C
+  #   primary_address: 0x29
+  #   secondary_address: [0x0C, 0x0D]
+  #   precision: 2
+  #   display_variable: number 
+  #   description: "This is the Acceleration of Z Axis from the IMU"
+  #   bit_length: 8 
+  #   sample_rate: 1 #sample rate in Hz
+
+
+ 
+
+
+
+#####################################################################################
+##                  PART 5: WATCHER CONFIGURATION
+##
+## This portion of the configuration file deals with "Watcher" active control portion
+## of the system. Here, we define "Controls" which are actions that are activated and
+## deactivated by conditional checks sensors throughout the system
+#####################################################################################
+
+##Example Control
+#TSI-Heat_Check:
+    #cooldown: 10                                      #minimum time between activating (seconds)
+    #max_duration: 30                           #time after which it will automatically turn off
+    #inputs:
+        #Tempin: TSI-Temp 
+    #entry_condition:
+        #str: 'Tempin > 60'
+        #type: REPETITION                         #REPETITION or PERIOD or INSTANTANEOUS
+        #reps: 5
+        #duration: 10                       #Repetitions-Seconds for REPETITION and Seconds for DURATION; INSTANTANEOUS does not use this field
+    #exit_condition:
+        #str: 'Tempin <= 40'                     #Condition to turn off Watcher action once its been activated, only used for LATCH persistence, cannot be true at same time as Condition
+        #type: DURATION
+        #duration: 8
+    #action:
+        #type: LOG                                  #if LOG put text, if WARNING put text (maybe color/flashing?), if WRITE write to a sensor on the vehicle:
+        #message: 'TSI Temperature over 60'  
+
+    #NOTE: these are not full configurations. Just examples of Action_Details for alternate Action_Type's
+
+## Normally a control would have only have once action, but this
+    #action:
+        # type: WARNING
+        # message: "msg1"
+        # suggestion: "suggestion1"
+        # priority: 5
+
+    #action:
+        # type: WRITE
+        # sensor: sensorName
+        # value: val
+
+Controls:
+
+## Watcher Sensor 
+# IMU_gravityZ:
+#     cooldown: 10                                      #minimum time between activating (seconds)
+#     max_duration: 30                           #time after which it will automatically turn off
+#     inputs:
+#         grav: gravity_z 
+#     entry_condition:
+#         str: 'grav < 5'
+#         type: INSTANTANEOUS                         #REPETITION or PERIOD or INSTANTANEOUS                    
+#     exit_condition:
+#         str: 'grav > 8'                     #Condition to turn off Watcher action once its been activated, only used for LATCH persistence, cannot be true at same time as Condition
+#         type: INSTANTANEOUS
+#     action:
+#         type: WARNING                                  #if LOG put text, if WARNING put text (maybe color/flashing?), if WRITE write to a sensor on the vehicle:
+#         message: "gravity under 5 "
+#         suggestion: "level out"
+#         priority: 1
+
+  # mtr_selct_app:
+  #   cooldown: 10                                      #minimum time between activating (seconds)
+  #   max_duration: 30                           #time after which it will automatically turn off
+  #   inputs:
+  #       state: emulator_tsi_drive_state
+  #   entry_condition:
+  #       str: 'state == "DRIVE"'
+  #       type: INSTANTANEOUS                         #REPETITION or PERIOD or INSTANTANEOUS                    
+  #   exit_condition:                                 
+  #       str: 'state == "OFF"'                     #Condition to turn off Watcher action once its been activated, only used for LATCH persistence, cannot be true at same time as Condition
+  #       type: INSTANTANEOUS
+  #   action:
+  #       type: WRITE                                  #if LOG put text, if WARNING put text (maybe color/flashing?), if WRITE write to a sensor on the vehicle:
+  #       sensor: motor_select_application
+  #       value: 1
+
+  activate_sloop_relay:
+    max_duration: 2
+    inputs:
+      temp: emulator_temperature
+    entry_condition:
+      str: 'temp > 70'
+      type: INSTANTANEOUS
+    action:
+      type: WRITE
+      sensor: scada_relay
+      value: 1
+
+  epal_temp_warning:
+    cooldown: 1
+    inputs:
+        Tempin: emulator_engine_temperature
+    entry_condition:
+        str: 'Tempin > 150'
+        type: INSTANTANEOUS                                          
+    exit_condition:
+        str: 'Tempin <= 120'                   
+        type: DURATION
+        duration: 2
+    action:
+      type: WARNING
+      message: "CRITICAL TEMPERATURE"
+      suggestion: "Throttle down or safety loop will shut off"
+      priority: 5
+
+  log_motor_over_temp:
+    cooldown: 60
+    inputs:
+        Tempin: emulator_engine_temperature
+    entry_condition:
+        str: 'Tempin > 150'
+        type: INSTANTANEOUS
+    exit_condition:
+        str: 'Tempin <= 150'
+        type: INSTANTANEOUS                                            
+    action:
+      type: LOG
+      message: 'Motor exceeded max safe temperature'  
+
+
+#####################################################################################
+##                  PART 6: POST-PROCESSING CONFIGURATION
+##
+## This portion of the configuration file deals with "Postman" post-processing portion
+## of the system. Here, we define the ip address of the Raspberry Pi on which the data
+## is stored, the current definition of a SCADA "session", and the data fields that
+## are used to generate an "expensive summary" preview a session before exporting 
+#####################################################################################
+
+Post_Processing: 
+  ip_address: '139.147.91.183'
+  
+  session_delimiting:
+    input: emulator_tsi_drive_state
+    in_session_condition: 'input == "DRIVE"'
+
+  # always display MAX MIN AVG 
+  # ONLY NUMERICAL DATA can be used
+  session_preview_data:
+    - emulator_car_mph
+    - emulator_engine_temperature
+    - emulator_battery_percentage
+
+#####################################################################################
+##                  PART 7: EPAL CONFIGURATION
+##
+## This portion of the configuration file deals with "Dashboard" driver display portion
+## of the system. Here, we define the sensors whose data is displayed on the dashboard
+## so that the logger will add their data values to dashboard's JSON file
+#####################################################################################
+
+EPAL:
+  display_sensors:
+    - emulator_bool_drive_signal
+    - emulator_car_mph
+    - emulator_battery_percentage
+    - emulator_battery_temperature
+    - emulator_engine_temperature
