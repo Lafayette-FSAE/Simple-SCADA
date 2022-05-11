@@ -1,0 +1,70 @@
+#!/bin/bash
+
+
+#############################################################################################
+## Company: FSAE Lafayette College                                                               
+## Engineers: Tafita Rakotozandry
+## Last Updated : 05/24/2022                        
+## Project Name: SCADA FSAE 2022                                 
+## Module Name: install                                               
+## Description: This file is the install file for the scada system. 
+##              This file installs software dependencies for Scada and sets up system-level 
+##              modifications needed to use the scada system.
+##              In to run this file the user must run sudo bash install in the terminal from 
+##              the SCADA_2021 folder.                 
+#############################################################################################
+
+#install linux system dependencies
+apt-get update
+apt-get install python3
+apt-get install python3-pip
+apt-get install can-utils
+apt-get install i2c-tools
+apt-get install python-smbus
+sudo apt-get install python-rpi.gpio
+apt install python3-tk
+apt install postgresql libpq-dev postgresql-client postgresql-client-common -y
+# apt-get install python-usb python3-usb
+apt-get install libusb-1.0-0 libusb-1.0-0-dev
+apt-get install libudev-dev libfox-1.6-dev autotools-dev autoconf automake libtool
+
+# install python dependencies
+pip3 install python-can
+pip3 install redis
+pip3 install blessed
+pip3 install psycopg2-binary
+pip3 install pyyaml
+pip3 install smbus
+pip install pyyaml #not sure why we need this, but we do
+pip3 install canopen
+# pip3 install pyusb #pretty sure we can remove this
+
+
+# copy lxsession file into the .config folder
+#cd /usr/etc/scada/GUI 
+sudo chmod +x gui/gui.py 
+#sudo chmod +x /usr/etc/scada/GUI
+
+cd /usr/bin
+sudo chmod +x scada_gui.py #NOTE TO TEAM: this doesn't work unless you've already run make
+cp -r /etc/xdg/lxsession /home/pi/.config
+cd /home/pi/.config/lxsession/LXDE-pi
+## ADD the following line to the end of the file 
+echo '@/usr/bin/gui.py' >> autostart
+##Restart pi 
+
+# Creating Bit-Banged I2C BUS to support clock strecthing for BNO-055 IMU 
+cd /boot 
+echo 'dtoverlay=i2c-gpio,bus=3,i2c_gpio_sda=02,i2c_gpio_scl=03' >> config.txt
+
+# Adding the RTC setup file to rclocal for rtc setup on boot
+cd /etc
+echo 'sudo python3 /usr/bin/scadartc_setup.py' >> rc.local
+
+# Setup Can 
+cd /boot
+echo 'dtparam=spi=on' >> config.txt
+echo 'dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25' >> config.txt 
+echo 'dtoverlay=spi-bcm2835-overlay' >> config.txt 
+
+echo 'INSTALL COMPLETE'
