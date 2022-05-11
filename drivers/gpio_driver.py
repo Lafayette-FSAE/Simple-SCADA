@@ -14,8 +14,8 @@ import time
 import RPi.GPIO as GPIO
 
 #CONFIG PATH
-lib_path = '/home/pi/Desktop/Simple-SCADA'
-config_path = '/home/pi/Desktop/Simple-SCADA/config'
+lib_path = '/usr/etc/scada'
+config_path = '/usr/etc/scada/config'
 
 sys.path.append(lib_path)
 sys.path.append(config_path)

@@ -6,8 +6,8 @@ import logging
 __config = {}
 __loaded = False
 
-lib_path = '/home/pi/Desktop/Simple-SCADA'
-config_path = '/home/pi/Desktop/Simple-SCADA/config'
+lib_path = '/usr/etc/scada'
+config_path = '/usr/etc/scada/config'
 
 #Harry: I ADDED THIS
 #yaml_name = 'config2.yaml'

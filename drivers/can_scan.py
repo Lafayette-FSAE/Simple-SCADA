@@ -15,8 +15,8 @@ import time
 import canopen
 
 #Importing the config file
-lib_path = '/home/pi/Desktop/Simple-SCADA'
-config_path = '/home/pi/Desktop/Simple-SCADA/config'
+lib_path = '/usr/etc/scada'
+config_path = '/usr/etc/scada/config'
 #this is temporary, just for testing
 local_path = '../utils'
 
