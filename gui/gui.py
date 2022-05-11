@@ -103,11 +103,19 @@ class App:
             sensor_data["justify"] = "center"
             sensor_data["text"] = data_val
             sensor_data.place(x=x_in+title_width+20,y=y_in,width=data_width,height=56) 
+
+    def data_read(self,title):
+            temp=driver.read(title)
+            if(isinstance(temp,int)):
+                    return str(round(temp,5))
+            else:
+                    return "data"
+
     def update(self):
 #set the update  data here 
-        self.data_template(80,210,"Linear Acceleration X",str(round(driver.read("linacc_x"),5)))
-        self.data_template(80,300,"Linear Acceleration Y",str(round(driver.read("linacc_y"),5)))
-        self.data_template(80,410,"Linear Acceleration Z",str(round(driver.read("linacc_z"),5)))
+        self.data_template(80,210,"Linear Acceleration X",data_read("linacc_x"),5)
+        self.data_template(80,300,"Linear Acceleration Y",data_read("linacc_y"),5)
+        self.data_template(80,410,"Linear Acceleration Z",data_read("linacc_z"),5)
         root.after(500, self.update) # run itself again after 100 ms
 
 
