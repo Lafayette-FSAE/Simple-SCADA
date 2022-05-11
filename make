@@ -36,7 +36,7 @@ chmod +x gui/gui.py
 
 
 # copy binary files to /usr/bin
-cp Simple-SCADA /usr/bin/simple-scada
+cp ../Simple-SCADA /usr/bin/simple-scada
 
 #Copying down i2c sorter 
 # cp drivers/i2c_sorter.py /usr/bin/i2c_sorter.py
