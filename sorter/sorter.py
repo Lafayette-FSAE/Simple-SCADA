@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 ##############################################################################################
 ## Company: FSAE Lafayette College                                                               
-## Engineers:Irwin Frimpong,Harrison Walker,Lia Chrysanthopoulos, Mithil Shah, Adam Tunnell                                    
-## Last Updated : 05/11/2021 5:14 PM                       
-## Project Name: SCADA FSAE 2021                                 
+## Engineers: Tafita Rakotozandry 
+## Last Updated : 05/11/2022 5:14 PM                       
+## Project Name: SCADA FSAE 2022                                 
 ## Module Name: sorter.py                                                 
-## Description: Sorter module used to iterate through the list of defined sensors
-## in the configuation file with respect to their sample periods for them to sampled and later
-## calibrated accordingly               
+## Description: Sorter module used to iterate through the list of defined sensors and display 
+##the data              
 #############################################################################################
 import sys, os
 import time
@@ -23,13 +22,11 @@ sys.path.append(config_path)
 
 from drivers import driver
 import config
-#import redis
 import utils
 from utils import rtc_setup
 from utils import imu_setup
 
 ##########Declariing i2C Bus##############
-#bus = smbus.SMBus(3) 
 bus = smbus.SMBus(3) 
 
 ########################################## 
@@ -59,28 +56,9 @@ for key in config.get('Sensors'):
 
 
 while True: 
-    # # RTC Startup Setup
-    # rtc_setup.rtc_pitimesteup()
 
-    # #IMU Startup Setup
-    # imu_setup.imu_config()
-
-    # Reading
+    # Go through the sensorList read on the Yalm file and display the readings 
     for sensorName in SensorList :
-        # if(time.time() - last_sampled[sensorName] > sample_period[sensorName] and float(sample_period[sensorName]) != 0.0):
-        #     #uncomment below to see what sensor you are on in logs, may be helpful if one sensor is causing the system to break
-        #     # print('SENSOR NAME IS ' + sensorName + 'and its type is')
-        #     # print(type(sensorName))
-
-        #     #Appending sensor name to sensor value for distinction in redis database
-        #     key = '{}:{}'.format(sensorName, driver.read(sensorName))
-        #     #Python String Method that makes everything lowercase
-        #     key = key.lower()
-        #     # print(key)
-        #     #Putting Sensor Data into redis channel
-        #     Redisdata.publish('raw_data',key)
-        #     last_sampled[sensorName] = time.time()
-        #driver.read(sensorName)
         try:
             print(sensorName+ " "+ str(driver.read(sensorName)))
         except:
