@@ -24,13 +24,29 @@ There goal of the Simple SCADA is to help the future team that would work on the
 <div style="page-break-after: always"></div>
 
 # Installation
-To install the software, open the command line and run the following command: 
+To install the different dependencies of the software, open the command line and run the following command: 
 
 ```bash
 git clone git@github.com:Lafayette-FSAE/Simple-SCADA.git
 cd Simple-SCADA
 sudo bash install
 ```
+Once the dependency is installed completely, run the following command in the same Simple-SCADA directory 
+```bash
+sudo bash make
+```
+It will move the file in the address /usr/etc/scada
+
+To run the gui run the following command 
+```bash
+sudo python3 /usr/etc/scada/gui/gui.py
+```
+To run the simple version of the sorter 
+```bash
+sudo python3 /usr/etc/scada/sorter/sorter.py
+```
+
+As you explore the software, you can get familiar to the basic and make change as you want it to be 
 
 <div style="page-break-after: always"></div>
 
